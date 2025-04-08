@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="regis-text">Smart Resume</div>
+    <img class="png-image" src="images/cv.png">
+    <input type="text" class="text-mail" placeholder="G-mail">
+    <input type="password" class="text-pass" placeholder="Password">
+    <input type="password" class="text-pass-con" placeholder=" Confirm Password">
+    <button class="regis-btn">Sign-Up</button>
+    <a class="already-have-account"href="/login-box">already have account</a>
+</div>
+
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 380px;
+    height: auto;
+    background-color: #FAD0C4;
+    font-weight: bold;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    padding: 15px;
+    gap: 15px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .regis-text {
+  font-size: 35px;
+  text-align: center;
+  color: #FFF7F3;
+  font-weight: lighter;
+  margin-bottom: 5px; /* Reduce space below */
+  /* background-color: red; */
+  /* padding: -17px;
+  margin: -17px; */
+  
+}
+
+  .png-image {
+  width: 120px; /* Adjust size */
+  height: auto;
+  padding: 0px; /* Remove extra padding */
+  margin-top: -5px; /* Move it closer */
+}
+
+  .text-mail, .text-pass,.text-pass-con {
+    width: 100%;
+    height: 60px;
+    padding: 20px;  
+    background-color: #FFF7F3; /* Set background color */
+    text-align: left;
+    border-radius: 20px;
+    font-size: 20px; 
+    color: #C599B6; /* Set text color */
+    font-weight: lighter;
+    border: none;
+  }
+
+  .text-mail:focus, .text-pass:focus , .text-pass-con:focus {
+    border: 2px solid #C599B6; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+  }
+
+  .regis-btn {
+    width: 100%;
+    height: 60px;
+    background-color: #C599B6; 
+    color: #FFF7F3;
+    border: none;
+    border-radius: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+
+  .regis-btn:hover {
+    background-color: #9e6d7a; /* Darker shade on hover */
+  }
+
+  .already-have-account {
+  color: #FFF7F3;
+  font-size: 17px;
+  font-weight: normal;
+  text-align: center; 
+  /* padding: -30px;
+  margin: -30px; */
+}
+
+
+  .already-have-account:hover {
+    text-decoration: underline; /* Add an underline effect when hovered */
+    
+  }
+</style>

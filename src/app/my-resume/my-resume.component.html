@@ -1,0 +1,5 @@
+<p *ngIf="isLoggedIn; else notLoggedIn">Welcome to My Resume</p>
+
+<ng-template #notLoggedIn>
+    <p>Please log in to view your resume.</p>
+</ng-template>

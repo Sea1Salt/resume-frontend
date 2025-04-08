@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="login-text">Smart Resume</div>
+    <img class="png-image" src="images/cv.png">
+    <input type="text" class="text-usr" placeholder="Username">
+    <input type="password" class="text-pass" placeholder="Password">
+    <button class="login-btn">Sign-In</button>
+    <a class="create-new-account" routerLink="/regis-box" >Create new account</a>
+</div>
+
+
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Ensures spacing between elements */
+    width: 380px;
+    height: auto; /* Adjusted height to fit all content */
+    background-color: #FAD0C4;
+    font-weight: bold;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Padding and spacing */
+    padding: 15px;
+    gap: 15px;
+    
+    /* Centering */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .login-text {
+  font-size: 35px;
+  text-align: center;
+  color: #FFF7F3;
+  font-weight: lighter;
+  margin-bottom: 5px; /* Reduce space below */
+  /* background-color: red; */
+  /* padding: -17px;
+  margin: -17px; */
+  
+}
+
+  .png-image {
+  width: 120px; /* Adjust size */
+  height: auto;
+  padding: 0px; /* Remove extra padding */
+  margin-top: -5px; /* Move it closer */
+}
+
+  .text-usr, .text-pass {
+    width: 100%;
+    height: 60px;
+    padding: 20px;
+    background-color: #FFF7F3; /* Set background color */
+    text-align: left;
+    border-radius: 20px;
+    font-size: 20px; 
+    color: #C599B6; /* Set text color */
+    font-weight: lighter;
+    border: none;
+  }
+
+  .text-usr:focus, .text-pass:focus {
+    border: 2px solid #C599B6; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+  }
+
+  .login-btn {
+    width: 100%;
+    height: 60px;
+    background-color: #C599B6; 
+    color: #FFF7F3;
+    border: none;
+    border-radius: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+
+  .login-btn:hover {
+    background-color: #9e6d7a; /* Darker shade on hover */
+  }
+
+  .create-new-account {
+  color: #FFF7F3;
+  font-size: 17px;
+  font-weight: normal;
+  text-align: center; 
+  /* padding: -30px;
+  margin: -30px; */
+}
+
+
+  .create-new-account:hover {
+    text-decoration: underline; /* Add an underline effect when hovered */
+    
+  }
+</style>

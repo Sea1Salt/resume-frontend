@@ -1,0 +1,108 @@
+<div class="container">
+    <a href="/academic-box" class="academic">
+        <img class="academic-pic" src="images/aca.png">
+        <span>Academic</span>
+    </a>
+    <a href="" class="activity">
+        <img class="activity-pic" src="images/act.png">
+        <span>Activity</span>
+    </a>
+    <a href="" class="volunteer">
+        <img class="volunteer-pic" src="images/volun.png">
+        <span>Volunteer</span>
+    </a>
+    <a href="" class="about-me">
+        <img class="about-me-pic" src="images/me.png">
+        <span>About Me</span>
+    </a>
+</div>
+
+
+<style>
+    .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+}
+
+
+.academic {
+    background-color: #C599B6; /* Custom color for Academic */
+}
+
+.activity {
+    background-color: #E6B2BA; /* Custom color for Activity */
+}
+
+.volunteer {
+    background-color: #FAD0C4; /* Custom color for Volunteer */
+}
+
+.about-me {
+    background-color: #FFE6D9; /* Custom color for About Me */
+}
+/* Styling for each card */
+.academic,
+.activity,
+.volunteer,
+.about-me {
+    width: 280px;
+    height: 350px;
+    border-radius: 30px;
+    text-align: center;
+    padding: 15px;
+    padding-top: -20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid transparent;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+/* Image styling */
+.academic-pic,
+.activity-pic,
+.volunteer-pic,
+.about-me-pic {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out; /* Smooth effect */
+    border: 3px solid transparent; /* Default no border */
+}
+
+.academic-pic:hover,
+.activity-pic:hover,
+.volunteer-pic:hover,
+.about-me-pic:hover {
+    border: 3px solid #ffffff; /* White border on hover */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* White glow effect */
+    transform: scale(1.02); /* Slight zoom effect */
+    opacity: 0.7; /* Make image slightly transparent */
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+/* Text Styling */
+.academic span,
+.activity span,
+.volunteer span,
+.about-me span {
+    font-size: 22px;
+    font-weight: normal;
+    color: #ffffff;
+    padding-top: 10px;
+}
+
+</style>

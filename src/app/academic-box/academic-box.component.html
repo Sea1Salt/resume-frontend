@@ -1,0 +1,265 @@
+<!-- Button to Open Popup -->
+<!-- Button to Open Popup -->
+<button class="adding-box" (click)="openPopup()">+</button>
+
+<!-- Pop-up Overlay -->
+<div class="overlay" [class.active]="isPopupOpen" (click)="closePopup()"></div>
+
+<!-- Academic Box (Popup) -->
+<div class="outer-box" [class.active]="isPopupOpen" [class.closing]="isClosing">
+    <div class="academic-box">
+        <button class="close-btn" (click)="closePopup()">✖</button>
+
+        <div class="academic-text">Academic</div>
+
+        <div class="form-row">
+            <input type="text" class="input-field" placeholder="Name of activity">
+            <input type="date" class="input-field" placeholder="Date">
+        </div>
+
+        <div class="form-row">
+            <input type="text" class="input-field" placeholder="Place">
+            <input type="text" class="input-field" placeholder="Comment">
+        </div>
+
+        <div class="form-row">
+            <div class="upload-box">
+                <label for="fileInput" class="upload-label">Upload pic +</label>
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*">
+                <img *ngIf="previewUrl" [src]="previewUrl" class="preview-img" alt="Uploaded Image">
+            </div>
+            <textarea class="detail-box" placeholder="Detail"></textarea>
+        </div>
+
+        <button class="save-btn">Save</button>
+    </div>
+</div>
+
+
+
+<style>
+    /* Initially hidden */
+    /* Initially hidden */
+    .outer-box {
+        padding: 10px;
+        width: 720px;
+        height: 510px;
+        background-color: #C599B6;
+        border-radius: 30px;
+        position: fixed;
+        bottom: -100%;
+        /* Start hidden below */
+        left: 50%;
+        transform: translate(-50%, 0);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition: bottom 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+
+    /* Slide up (Show) */
+    .outer-box.active {
+        bottom: 20%;
+        /* Move up */
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Slide down (Hide) */
+    .outer-box.closing {
+        bottom: -100%;
+        /* Move back down */
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Show overlay when active */
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+    .academic-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 650px;
+        height: 440px;
+        background-color: #C599B6;
+        border-radius: 20px;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 10px;
+        border: 5px solid #FFF7F3;
+
+    }
+
+    .academic-text {
+        width: 100%;
+        text-align: left;
+        color: #FFF7F3;
+        font-size: 40px;
+        font-weight: bold;
+        margin-left: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .input-field {
+        width: 48%;
+        height: 40px;
+        background-color: #FFF7F3;
+        color: #726c70;
+        border: none;
+        border-radius: 15px;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .upload-box {
+        width: 49%;
+        height: 122px;
+        background-color: #FFF7F3;
+        color: #C599B6;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        font-size: 16px;
+        font-weight: normal;
+        position: relative;
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    /* Hide the default file input */
+    #fileInput {
+        display: none;
+    }
+
+    /* Upload Label */
+    .upload-label {
+        display: grid;
+        cursor: pointer;
+        background-color: #C599B6;
+        color: #FFF7F3;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 14px;
+        text-align: start;
+        justify-content: start;
+    }
+
+    /* Preview Image */
+    .preview-img {
+        width: auto;
+        /* Adjust width */
+        height: auto;
+        /* Maintain aspect ratio */
+        max-height: 100px;
+        /* Prevent from getting too big */
+        border-radius: 10px;
+        margin-top: 10px;
+        object-fit: cover;
+    }
+
+    .plus-sign {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .detail-box {
+        width: 46%;
+        height: 120px;
+        background-color: #FFF7F3;
+        color: #C599B6;
+        border: none;
+        border-radius: 15px;
+        padding: 10px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .save-btn {
+        align-self: flex-end;
+        width: 100px;
+        height: 40px;
+        background-color: #FFF7F3;
+        color: #C599B6;
+        border: none;
+        border-radius: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .save-btn:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-box,
+    .input-field {
+        border: 2px solid #C599B6;
+        outline: none;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .adding-box {
+        display: grid;
+        background-color: #C599B6;
+        width: 185px;
+        height: 235px;
+        text-align: center;
+        border-radius: 30px;
+        margin: 10px;
+        margin-top: 20px;
+        margin-left: 30px;
+        align-items: center;
+        justify-content: center;
+        font-size: 75px;
+        font-weight: normal;
+        color: aliceblue;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        border: none;
+        opacity: 65%;
+
+    }
+
+    .adding-box:hover {
+        transform: scale(1.02);
+    }
+</style>
