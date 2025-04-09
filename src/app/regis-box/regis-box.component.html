@@ -1,12 +1,24 @@
 <div class="container">
-    <div class="regis-text">Smart Resume</div>
-    <img class="png-image" src="images/cv.png">
-    <input type="text" class="text-mail" placeholder="G-mail">
-    <input type="password" class="text-pass" placeholder="Password">
-    <input type="password" class="text-pass-con" placeholder=" Confirm Password">
-    <button class="regis-btn">Sign-Up</button>
-    <a class="already-have-account"href="/login-box">already have account</a>
+
+
+  <div class="regis-text">Smart Resume</div>
+  <img class="png-image" src="images/cv.png">
+
+  <input type="email" [(ngModel)]="gmail" class="text-mail" placeholder="G-mail">
+  <input type="password" [(ngModel)]="password" class="text-pass" placeholder="Password" autocomplete="off">
+  <input type="password" [(ngModel)]="comfirmPass" class="text-pass-con" placeholder="Confirm Password"
+    autocomplete="off">
+  <div *ngIf="showError" class="error-text">Please fill in all fields correctly.</div>
+  <button (click)="savePass()" class="regis-btn">Sign-Up</button>
+  <a class="already-have-account" href="/login-box">Already have an account?</a>
 </div>
+
+<!-- <ul>
+  <li *ngFor="let user of usrs">
+    📧 {{ user.Gmail }} | 🔑 {{ user.Password }}
+  </li>
+</ul> -->
+
 
 
 <style>
@@ -26,10 +38,10 @@
     border-radius: 30px;
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
+
     padding: 15px;
     gap: 15px;
-    
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -37,46 +49,58 @@
   }
 
   .regis-text {
-  font-size: 35px;
-  text-align: center;
-  color: #FFF7F3;
-  font-weight: lighter;
-  margin-bottom: 5px; /* Reduce space below */
-  /* background-color: red; */
-  /* padding: -17px;
+    font-size: 35px;
+    text-align: center;
+    color: #FFF7F3;
+    font-weight: lighter;
+    margin-bottom: 5px;
+    /* Reduce space below */
+    /* background-color: red; */
+    /* padding: -17px;
   margin: -17px; */
-  
-}
+
+  }
 
   .png-image {
-  width: 120px; /* Adjust size */
-  height: auto;
-  padding: 0px; /* Remove extra padding */
-  margin-top: -5px; /* Move it closer */
-}
+    width: 120px;
+    /* Adjust size */
+    height: auto;
+    padding: 0px;
+    /* Remove extra padding */
+    margin-top: -5px;
+    /* Move it closer */
+  }
 
-  .text-mail, .text-pass,.text-pass-con {
+  .text-mail,
+  .text-pass,
+  .text-pass-con {
     width: 100%;
     height: 60px;
-    padding: 20px;  
-    background-color: #FFF7F3; /* Set background color */
+    padding: 20px;
+    background-color: #FFF7F3;
+    /* Set background color */
     text-align: left;
     border-radius: 20px;
-    font-size: 20px; 
-    color: #C599B6; /* Set text color */
+    font-size: 20px;
+    color: #C599B6;
+    /* Set text color */
     font-weight: lighter;
     border: none;
   }
 
-  .text-mail:focus, .text-pass:focus , .text-pass-con:focus {
-    border: 2px solid #C599B6; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+  .text-mail:focus,
+  .text-pass:focus,
+  .text-pass-con:focus {
+    border: 2px solid #C599B6;
+    /* Change border color on focus */
+    outline: none;
+    /* Remove default outline */
   }
 
   .regis-btn {
     width: 100%;
     height: 60px;
-    background-color: #C599B6; 
+    background-color: #C599B6;
     color: #FFF7F3;
     border: none;
     border-radius: 20px;
@@ -86,21 +110,29 @@
   }
 
   .regis-btn:hover {
-    background-color: #9e6d7a; /* Darker shade on hover */
+    background-color: #9e6d7a;
+    /* Darker shade on hover */
   }
 
   .already-have-account {
-  color: #FFF7F3;
-  font-size: 17px;
-  font-weight: normal;
-  text-align: center; 
-  /* padding: -30px;
+    color: #FFF7F3;
+    font-size: 17px;
+    font-weight: normal;
+    text-align: center;
+    /* padding: -30px;
   margin: -30px; */
-}
+  }
 
 
   .already-have-account:hover {
-    text-decoration: underline; /* Add an underline effect when hovered */
-    
+    text-decoration: underline;
+    /* Add an underline effect when hovered */
+
+  }
+
+  .error-text {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 </style>
