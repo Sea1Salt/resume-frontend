@@ -1,14 +1,14 @@
 <div class="container">
     <div class="login-text">Smart Resume</div>
     <img class="png-image" src="images/cv.png">
-    <input type="text" class="text-usr" placeholder="Username">
-    <input type="password" class="text-pass" placeholder="Password">
+    <input [(ngModel)]="email" type="text" class="text-usr" placeholder="Username">
+    <input [(ngModel)]="password" type="password" class="text-pass" placeholder="Password">
     <button class="login-btn">Sign-In</button>
     <a class="create-new-account" routerLink="/regis-box" >Create new account</a>
 </div>
 
-<p>Email from localStorage: {{ email }}</p>
-<p>Password from localStorage: {{ password }}</p>
+<!-- <p>Email from localStorage: {{ email }}</p>
+<p>Password from localStorage: {{ password }}</p> -->
 
 
 

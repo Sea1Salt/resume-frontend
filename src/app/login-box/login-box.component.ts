@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -12,10 +12,5 @@ export class LoginBoxComponent {
   email: string = '';
   password: string = '';
  
-  ngOnInit(): void {
-    this.email = localStorage.getItem('userEmail') || '';
-    this.password = localStorage.getItem('userPassword') || '';
-  }
-
 
 }

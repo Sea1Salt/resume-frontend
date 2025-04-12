@@ -33,9 +33,10 @@ export class RegisBoxComponent {
       this.comfirmPass = "";
       this.saveLocal();
       this.router.navigate(['/login-box']);
-
-      localStorage.setItem('userEmail', this.gmail);
-      localStorage.setItem('userPassword', this.password);
+      // localStorage.setItem('userEmail', JSON.stringify(this.gmail));
+      // console.log('userEmail',this.gmail)
+      // localStorage.setItem('userPassword', this.password);
+      // console.log('userPassword',JSON.stringify(this.password))
     }
     else {
       this.showError = true;

@@ -10,9 +10,7 @@ import { AcademicBoxComponent } from './academic-box/academic-box.component';
 
 export const routes: Routes = [
     {
-        path:'',
-        redirectTo: 'login-box',
-        pathMatch:'full'
+        path: '', redirectTo: 'register', pathMatch: 'full' 
 
     },
     {

@@ -3,8 +3,8 @@
     <div class="pic-profile"></div>
     <div class="A">Achira</div>
     <div class="F">Founder,CEO</div>
-    <button class="btn-learn-more">Learn More</button>
-    <p>
+    <button class="btn-learn-more" (click)="togglePopup()">Learn More</button>
+    <p class="T">
         A <strong>Smart Resume</strong> feature in streaming services enhances the viewing experience
         by allowing users to seamlessly pick up where they left off, even when switching devices.
         This eliminates the need to manually search for the last watched position, saving time and effort.
@@ -14,6 +14,21 @@
         to app crashes or unexpected interruptions. Overall, smart resume makes streaming more efficient,
         personalized, and user-friendly.
     </p>
+</div>
+
+<div class="popup-backdrop" *ngIf="showPopup" (click)="togglePopup()"></div>
+<div class="learn-more-popup" [class.show]="showPopup">
+    <h2>Achira Nitinai</h2>
+    <div class="pic2-profile"></div>
+    <p>
+        Achira Nitinai is a tech enthusiast with a growing interest in business and innovation. His curiosity about the digital world drives him to explore new technologies, 
+        from software development to emerging trends in artificial intelligence and cybersecurity. He enjoys problem-solving and staying up-to-date with the latest advancements, 
+        making him a forward-thinking individual in the tech space.In addition to his technical skills, Achira is also an avid badminton player, demonstrating discipline, agility, 
+        and strategic thinking both on and off the court. His passion for business further complements his interests, as he learns about entrepreneurship, market strategies, 
+        and financial management. With a strong combination of tech knowledge, athletic dedication, and business acumen, Achira is shaping himself into a well-rounded individual 
+        ready to take on future challenges in multiple fields.
+    </p>
+    <button (click)="togglePopup()" class="close-btn">Close</button>
 </div>
 
 <style>
@@ -32,12 +47,26 @@
         margin-bottom: -2px;
     }
 
+    h2{
+        color: #FFF7F3;
+    }
+
+
     .pic-profile {
         height: 200px;
         width: 200px;
         background-color: #C599B6;
         border-radius: 50%;
         margin: 20px auto;
+    }
+
+    .pic2-profile{
+        height: 200px;
+        width: 200px;
+        background-color: #FFF7F3;
+        border-radius: 50%;
+        margin-top: 60px;
+       
     }
 
     .A {
@@ -50,6 +79,15 @@
         font-size: 18px;
         font-weight: bold;
         color: #C599B6;
+    }
+    .T{
+        max-width: 800px;
+        margin: 10px;
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 1.6;
+        color: #C599B6;
+
     }
 
     .btn-learn-more {
@@ -77,11 +115,51 @@
     }
 
     p {
-        max-width: 800px;
-        margin: 10px auto;
+        max-width: 1000px;
+        margin: 20px;
         font-size: 20px;
         font-weight: 300;
         line-height: 1.6;
+        color: #FFF7F3;
+    }
+    .learn-more-popup {
+        display: flex;
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        background-color: #C599B6;
+        padding: 20px;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+        transition: bottom 0.3s ease-in-out;
+        z-index: 1001;
+        border-radius: 20px 20px 0 0;
+        gap:50px;
+    }
+
+    .learn-more-popup.show {
+        bottom: 0;
+    }
+
+    .popup-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .close-btn {
+        margin-top: 10px;
+        background: #FFF7F3;
         color: #C599B6;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        height: 30px;
+        font-size: 15px;
     }
 </style>

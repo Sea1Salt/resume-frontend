@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AboutComponent {
 
+  showPopup: boolean = false;
+
+togglePopup(): void {
+  this.showPopup = !this.showPopup;
+}
+
 }
