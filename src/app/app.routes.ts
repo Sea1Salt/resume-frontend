@@ -6,11 +6,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
 import { ProComponent } from './pro/pro.component';
 import { AcademicBoxComponent } from './academic-box/academic-box.component';
+import { ActivityBoxComponent } from './activity-box/activity-box.component';
+import { VolunteerBoxComponent } from './volunteer-box/volunteer-box.component';
+import { AboutMeComponent } from './about-me/about-me.component';
 
 
 export const routes: Routes = [
     {
-        path: '', redirectTo: 'register', pathMatch: 'full' 
+        path: '', redirectTo: 'login-box', pathMatch: 'full' 
 
     },
     {
@@ -40,6 +43,18 @@ export const routes: Routes = [
     {
         path:"academic-box",
         component:AcademicBoxComponent
+    },
+    {
+        path:"activity-box",
+        component:ActivityBoxComponent
+    },
+    {
+        path:"volunteer-box",
+        component:VolunteerBoxComponent
+    },
+    {
+        path:"about-me",
+        component:AboutMeComponent
     },
     
 

@@ -1,6 +1,6 @@
 <div class="all-screen">
-    <div class="card" *ngFor="let item of academics; let i = index">
-        <button class="delete-btn" (click)="deleteAcademic(i)">×</button>
+    <div class="card" *ngFor="let item of volunteers; let i = index">
+        <button class="delete-btn" (click)="deleteActivity(i)">×</button>
         <img *ngIf="item.Image" [src]="item.Image" class="card-img">
         <h3>{{ item.Name }}</h3>
         <p><strong>Place :</strong> {{ item.Place }}</p>
@@ -13,7 +13,7 @@
         <button class="toggle-btn" (click)="expandedCards[i] = !expandedCards[i]">
             {{ expandedCards[i] ? 'See Less' : 'See More' }}
         </button>
-        <button class="edit-btn" (click)="editAcademic(i)"> + Edit </button>
+        <button class="edit-btn" (click)="editActivity(i)"> + Edit </button>
     </div>
     <button class="adding-box" (click)="clearForm()">+</button>
 </div>
@@ -23,11 +23,11 @@
 
 <!-- Academic Box (Popup) -->
 <div class="outer-box" [class.active]="isPopupOpen" [class.closing]="isClosing">
-    <div class="academic-box">
+    <div class="activity-box">
         <div *ngIf="showError" class="error-text">Please fill in all fields correctly.</div>
         <button class="close-btn" (click)="closePopup()">✖</button>
 
-        <div class="academic-text">Academic</div>
+        <div class="activity-text">Volunteer</div>
 
         <div class="form-row">
             <input [(ngModel)]="name" type="text" class="input-field" placeholder="Name of activity">
@@ -48,7 +48,7 @@
             <textarea [(ngModel)]="detail" class="detail-box" placeholder="Detail"></textarea>
         </div>
 
-        <button (click)="saveAcademic()" class="save-btn">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
+        <button (click)="saveActivity()" class="save-btn">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
     </div>
 </div>
 
@@ -70,7 +70,7 @@
         padding: 10px;
         width: 720px;
         height: 510px;
-        background-color: #C599B6;
+        background-color: #FAD0C4;
         border-radius: 30px;
         position: fixed;
         bottom: -100%;
@@ -118,13 +118,13 @@
     }
 
 
-    .academic-box {
+    .activity-box {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 650px;
         height: 440px;
-        background-color: #C599B6;
+        background-color: #FAD0C4;
         border-radius: 20px;
         padding: 20px;
         position: absolute;
@@ -136,7 +136,7 @@
 
     }
 
-    .academic-text {
+    .activity-text {
         width: 100%;
         text-align: left;
         color: #FFF7F3;
@@ -167,7 +167,7 @@
         width: 49%;
         height: 122px;
         background-color: #FFF7F3;
-        color: #C599B6;
+        color: #FAD0C4;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
@@ -180,14 +180,16 @@
         padding: 10px;
     }
 
+    /* Hide the default file input */
     #fileInput {
         display: none;
     }
 
+    /* Upload Label */
     .upload-label {
         display: grid;
         cursor: pointer;
-        background-color: #C599B6;
+        background-color: #FAD0C4;
         color: #FFF7F3;
         padding: 10px;
         border-radius: 10px;
@@ -231,7 +233,7 @@
         width: 100px;
         height: 40px;
         background-color: #FFF7F3;
-        color: #C599B6;
+        color: #FAD0C4;
         border: none;
         border-radius: 15px;
         font-size: 16px;
@@ -246,7 +248,7 @@
 
     .detail-box,
     .input-field {
-        border: 2px solid #C599B6;
+        border: 2px solid #FAD0C4;
         outline: none;
     }
 
@@ -263,7 +265,7 @@
 
     .adding-box {
         display: grid;
-        background-color: #C599B6;
+        background-color: #FAD0C4;
         width: 185px;
         height: 235px;
         text-align: center;
@@ -314,7 +316,7 @@
         top: 8px;
         right: 8px;
         /* change to left: 8px; if you want it on the top-left */
-        background: #C599B6;
+        background: #FAD0C4;
         border: none;
         color: white;
         font-size: 18px;
@@ -343,7 +345,7 @@
     }
 
     .toggle-btn {
-        background: #C599B6;
+        background: #FAD0C4;
         border: none;
         color: white;
         cursor: pointer;
@@ -363,7 +365,7 @@
 
     .edit-btn{
         margin: 10px;
-        background: #C599B6;
+        background: #FAD0C4;
         border: none;
         color: white;
         cursor: pointer;
