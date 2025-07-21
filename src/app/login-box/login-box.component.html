@@ -1,21 +1,54 @@
 <div class="container">
-    <div class="login-text">Smart Resume</div>
-    <img class="png-image" src="images/cv.png">
-    <input [(ngModel)]="email" type="text" class="text-usr" placeholder="Username">
-    <input [(ngModel)]="password" type="password" class="text-pass" placeholder="Password">
-    <button class="login-btn">Sign-In</button>
-    <a class="create-new-account" routerLink="/regis-box" >Create new account</a>
+  <div class="login-text">Sign-In</div>
+  <img class="png-image" src="images/cv.png" />
+
+  <input [(ngModel)]="email" type="text" class="text-usr" placeholder="Username" />
+  <input [(ngModel)]="password" type="password" class="text-pass" placeholder="Password" />
+
+  <button typed="button" class="login-btn" (click)="onLogin()">Sign-In</button>
+
+  <a class="create-new-account" routerLink="/regis-box">Create new account</a>
 </div>
 
-<!-- <p>Email from localStorage: {{ email }}</p>
-<p>Password from localStorage: {{ password }}</p> -->
-
+<div *ngIf="showSuccess" class="alert alert-success">Sign-In Succesfully!</div>
+<div *ngIf="showError" class="alert alert-danger">{{ showError }}</div>
 
 
 <style>
   * {
     box-sizing: border-box;
   }
+
+
+  .alert-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.alert {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 300px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.alert-success {
+  /* background-color: #ffe0f5; */
+  color: #a87a99;
+  font-weight:normal;
+  /* border: 1px solid #C599B6; */
+}
+
+.alert-danger {
+  /* background-color: #f8d7da; */
+  color: #721c24;
+  font-weight:normal;
+  /* border: 1px solid #f5c6cb; */
+}
+
 
   .container {
     display: flex;
@@ -29,11 +62,11 @@
     border-radius: 30px;
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
+
     /* Padding and spacing */
     padding: 15px;
     gap: 15px;
-    
+
     /* Centering */
     position: absolute;
     top: 50%;
@@ -50,7 +83,7 @@
   /* background-color: red; */
   /* padding: -17px;
   margin: -17px; */
-  
+
 }
 
   .png-image {
@@ -67,7 +100,7 @@
     background-color: #FFF7F3; /* Set background color */
     text-align: left;
     border-radius: 20px;
-    font-size: 20px; 
+    font-size: 20px;
     color: #C599B6; /* Set text color */
     font-weight: lighter;
     border: none;
@@ -81,7 +114,7 @@
   .login-btn {
     width: 100%;
     height: 60px;
-    background-color: #C599B6; 
+    background-color: #C599B6;
     color: #FFF7F3;
     border: none;
     border-radius: 20px;
@@ -98,7 +131,7 @@
   color: #FFF7F3;
   font-size: 17px;
   font-weight: normal;
-  text-align: center; 
+  text-align: center;
   /* padding: -30px;
   margin: -30px; */
 }
@@ -106,6 +139,6 @@
 
   .create-new-account:hover {
     text-decoration: underline; /* Add an underline effect when hovered */
-    
+
   }
 </style>

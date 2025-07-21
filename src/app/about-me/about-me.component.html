@@ -1,168 +1,201 @@
 <div class="outer-box">
-    <div class="box">
-      <h2>About me</h2>
-      <div class="form-grid">
-        <input type="text" class="input-field" placeholder="First-name" [(ngModel)]="aboutMeData.firstname" />
-        <input type="text" class="input-field" placeholder="Last-name" [(ngModel)]="aboutMeData.lastname" />
-        <input type="text" class="input-field" placeholder="Nickname" [(ngModel)]="aboutMeData.nickname" />
-  
-        <input type="date" class="input-field" placeholder="birthdate" [(ngModel)]="aboutMeData.birthdate" />
-        <input type="text" class="input-field" placeholder="Gender" [(ngModel)]="aboutMeData.gender" />
-        <input type="text" class="input-field" placeholder="Address" [(ngModel)]="aboutMeData.address" />
-  
-        <input type="text" class="input-field" placeholder="Hard-Skill" [(ngModel)]="aboutMeData.hardSkill" />
-        <input type="text" class="input-field" placeholder="Soft-Skill" [(ngModel)]="aboutMeData.softSkill" />
-        <input type="text" class="input-field" placeholder="Hobby" [(ngModel)]="aboutMeData.hobby" />
-  
-        <input type="text" class="input-field" placeholder="Instagram" [(ngModel)]="aboutMeData.instagram" />
-        <input type="text" class="input-field" placeholder="Facebook" [(ngModel)]="aboutMeData.facebook" />
-        <input type="text" class="input-field" placeholder="Tel." [(ngModel)]="aboutMeData.tel" />
-  
-        <input type="text" class="input-field" placeholder="Motto" [(ngModel)]="aboutMeData.motto" />
-        <textarea placeholder="Description" class="input-field textarea" [(ngModel)]="aboutMeData.description"></textarea>
-  
-        <div class="upload-box">
-          <label for="fileInput">Upload your profile pic</label>
-          <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" />
-          <div *ngIf="previewUrl">
-            <img [src]="previewUrl" alt="Preview" class="preview-img" />
-          </div>
+  <div class="box">
+    <h2>About me</h2>
+    <div class="form-grid">
+      <input type="text" class="input-field" placeholder="First-name" [(ngModel)]="aboutMeData.name" />
+      <input type="text" class="input-field" placeholder="Last-name" [(ngModel)]="aboutMeData.lastname" />
+      <input type="text" class="input-field" placeholder="Nickname" [(ngModel)]="aboutMeData.nickname" />
+
+      <input type="date" class="input-field" placeholder="birthdate" [(ngModel)]="aboutMeData.birthDate" />
+      <select class="input-field" [(ngModel)]="aboutMeData.gender">
+        <option value="" disabled selected hidden>Select Gender</option>
+        <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+      </select>
+      <input type="text" class="input-field" placeholder="Address" [(ngModel)]="aboutMeData.address" />
+
+      <input type="text" class="input-field" placeholder="Hard-Skill" [(ngModel)]="aboutMeData.hardskill" />
+      <input type="text" class="input-field" placeholder="Soft-Skill" [(ngModel)]="aboutMeData.softskill" />
+      <input type="text" class="input-field" placeholder="Hobby" [(ngModel)]="aboutMeData.hobby" />
+
+      <input type="text" class="input-field" placeholder="Instagram" [(ngModel)]="aboutMeData.instagram" />
+      <input type="text" class="input-field" placeholder="Facebook" [(ngModel)]="aboutMeData.facebook" />
+      <input type="text" class="input-field" placeholder="Tel." [(ngModel)]="aboutMeData.telephone" />
+
+      <input type="text" class="input-field" placeholder="Motto" [(ngModel)]="aboutMeData.motto" />
+      <textarea placeholder="Description" class="input-field textarea" [(ngModel)]="aboutMeData.description"></textarea>
+
+      <div class="upload-box">
+        <label class="upload-label" for="fileInput">Upload your profile pic</label>
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" />
+        <div *ngIf="previewUrl">
+          <img [src]="previewUrl" alt="Preview" class="preview-img" />
         </div>
       </div>
-  
-      <div class="button-group">
-        <!-- <button (click)="editAboutMe()" class="btn">+Edit</button> -->
-        <button (click)="saveLocal()" class="btn">Save</button>
-      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="saveToServer()" class="btn">Save</button>
     </div>
   </div>
-  
+</div>
 
+<div *ngIf="showSuccess" class="alert alert-success">{{showSuccess}}</div>
+<div *ngIf="showError" class="alert alert-danger">{{ showError }}</div>
 
 <style>
-    .outer-box {
-        width: 1200px;
-        height: 780px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #FFE6D9;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  .alert-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 
-        position: fixed;
-        top: 53%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+  .alert {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 300px;
+    font-size: 16px;
+    font-weight: bold;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
+  }
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .alert-success {
+    /* background-color: #ffe0f5; */
+    color: #a87a99;
+    font-weight:normal;
+    /* border: 1px solid #C599B6; */
+  }
 
-    .box {
-        width: 1100px;
-        padding: 20px;
-        background-color: #FFE6D9;
-        border-radius: 30px;
-        border: 5px solid #fff7f3;
-        position: relative;
-    }
+  .alert-danger {
+    /* background-color: #f8d7da; */
+    color: #721c24;
+    font-weight:normal;
+    /* border: 1px solid #f5c6cb; */
+  }
 
-    h2 {
-        font-size: 40px;
-        color: #999297;
-        margin-bottom: 20px;
-    }
+  .outer-box {
+    width: 1200px;
+    height: 780px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFE6D9;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-    }
+    position: fixed;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    .input-field {
-        display: flex;
-        padding: 18px;
-        border: none;
-        border-radius: 20px;
-        background-color: #FFF7F3;
-        font-size: 16px;
-        text-align: left;
-        color: #C599B6;
-        
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .input-field:focus {
-        outline: none;
-        box-shadow: none;
-    }
+  .box {
+    width: 1100px;
+    padding: 20px;
+    background-color: #FFE6D9;
+    border-radius: 30px;
+    border: 5px solid #fff7f3;
+    position: relative;
+  }
 
-    .textarea {
-        grid-column: span 2;
-        resize: none;
-        height: 100px;
-    }
+  h2 {
+    font-size: 40px;
+    color: #999297;
+    margin-bottom: 20px;
+  }
 
-    .upload-box {
-        border-radius: 10px;
-        background-color: #FFF7F3;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        color: #726c70;
-        font-size: 14px;
-        padding: 15px;
-        text-align: center;
-        overflow: hidden;
-        height: 100px;
-        width: 100%;
-        box-sizing: border-box;
-    }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
 
-    .upload-label {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        height: 100%;
-    }
+  .input-field {
+    display: flex;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    background-color: #FFF7F3;
+    font-size: 16px;
+    text-align: left;
+    color: #C599B6;
 
-    input[type="file"] {
-        display: none;
-    }
+  }
 
-    .preview-img {
-        width: 50px;
-        height: 50px;
-        object-fit: scale-down;
-        border-radius: 10px;
-    }
+  .input-field:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
-    .button-group {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-        gap: 10px;
-    }
+  .textarea {
+    grid-column: span 2;
+    resize: none;
+    height: 100px;
+  }
 
-    .btn {
-        background-color: #FFF7F3;
-        border: none;
-        padding: 10px 30px;
-        border-radius: 15px;
-        cursor: pointer;
-        font-size: 15px;
-        color: #726c70;
-        outline: none;
-        box-shadow: none;
-    }
+  .upload-box {
+    border-radius: 10px;
+    background-color: #FFF7F3;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    color: #726c70;
+    font-size: 14px;
+    padding: 15px;
+    text-align: center;
+    overflow: hidden;
+    height: 100px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-    .btn:hover{
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  .upload-label {
+    display: flex;
+    cursor: pointer;
+    background-color: #C599B6;
+    color: #FFF7F3;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
 
-    }
+  input[type="file"] {
+    display: none;
+  }
+
+  .preview-img {
+    width: 50px;
+    height: 50px;
+    object-fit: scale-down;
+    border-radius: 10px;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+  .btn {
+    background-color: #FFF7F3;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #726c70;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .btn:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  }
 </style>

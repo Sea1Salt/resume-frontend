@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-row">
-            <div class="upload-box">
+            <div class="upload-box">    
                 <label for="fileInput" class="upload-label">Upload pic +</label>
                 <input type="file" id="fileInput" (change)="onImageSelected($event)" accept="image/*">
                 <img *ngIf="previewImage" [src]="previewImage" class="preview-img" alt="Uploaded Image">

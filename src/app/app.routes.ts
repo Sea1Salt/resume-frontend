@@ -13,13 +13,13 @@ import { AboutMeComponent } from './about-me/about-me.component';
 
 export const routes: Routes = [
     {
-        path: '', redirectTo: 'login-box', pathMatch: 'full' 
+        path: '', redirectTo: 'login-box', pathMatch: 'full'
 
     },
-    {
-        path:"login-box",
-        component:LoginBoxComponent
-    },  
+   {
+  path: "login-box",
+  loadComponent: () => import('./login-box/login-box.component').then(m => m.LoginBoxComponent)
+},
     {
         path:"regis-box",
         component:RegisBoxComponent
@@ -56,7 +56,7 @@ export const routes: Routes = [
         path:"about-me",
         component:AboutMeComponent
     },
-    
+
 
 
 

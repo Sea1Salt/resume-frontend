@@ -1,31 +1,54 @@
 <div class="container">
 
 
-  <div class="regis-text">Smart Resume</div>
+  <div class="regis-text">Sign-Up</div>
   <img class="png-image" src="images/cv.png">
 
   <input type="email" [(ngModel)]="gmail" class="text-mail" placeholder="G-mail">
   <input type="password" [(ngModel)]="password" class="text-pass" placeholder="Password" autocomplete="off">
   <input type="password" [(ngModel)]="comfirmPass" class="text-pass-con" placeholder="Confirm Password"
     autocomplete="off">
-  <div *ngIf="showError" class="error-text">Please fill in all fields correctly.</div>
   <button (click)="savePass()" class="regis-btn">Sign-Up</button>
   <a class="already-have-account" href="/login-box">Already have an account?</a>
 </div>
 
-<!-- <ul>
-  <li *ngFor="let user of usrs">
-    📧 {{ user.Gmail }} | 🔑 {{ user.Password }}
-  </li>
-</ul> -->
-
-
+ <div *ngIf="showError" class="alert alert-danger">{{ showError }}</div>
+  <div *ngIf="showSuccess" class="alert alert-success">Sign-Up successfully!</div>
 
 <style>
   * {
     box-sizing: border-box;
   }
 
+   .alert-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.alert {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 300px;
+  font-size: 16px;
+  font-weight: bold;
+  /* box-shadow: 0 2px 6px rgba(0,0,0,0.2); */
+}
+
+.alert-success {
+  /* background-color: #ffe0f5; */
+  color: #a87a99;
+  font-weight:normal;
+  /* border: 1px solid #C599B6; */
+}
+
+.alert-danger {
+  /* background-color: #f8d7da; */
+  color: #721c24;
+  font-weight:normal;
+  /* border: 1px solid #f5c6cb; */
+}
   .container {
     display: flex;
     flex-direction: column;

@@ -1,8 +1,12 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes'; // หรือไฟล์ routes ของคุณ
 
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
+export const appConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),   // ✅ เพิ่มตัวนี้เพื่อให้ HttpClient ใช้งานได้
+    // ...providers อื่น ๆ ที่คุณมี
+  ]
 };

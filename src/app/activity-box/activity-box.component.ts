@@ -18,7 +18,6 @@ interface ActivityBox {
 })
 
 export class ActivityBoxComponent {
-
   isPopupOpen = false;
   isClosing = false;
   previewUrl: string | ArrayBuffer | null = null;
@@ -46,7 +45,7 @@ export class ActivityBoxComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.previewImage = reader.result as string;
-        
+
         localStorage.setItem('uploadedImage', this.previewImage!);
       };
       reader.readAsDataURL(file); // Converts image to Base64
