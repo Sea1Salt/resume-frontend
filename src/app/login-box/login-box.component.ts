@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient,  } from '@angular/common/http';
 import { ApiService } from '../service-api.service';
 
 @Component({
   selector: 'app-login-box',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, HttpClientModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './login-box.component.html',
   styleUrls: ['./login-box.component.css']
 })

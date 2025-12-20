@@ -1,21 +1,37 @@
 <div class="container">
-    <a href="/academic-box" class="academic">
-        <img class="academic-pic" src="images/aca.png">
-        <span>Academic</span>
-    </a>
-    <a href="/activity-box" class="activity">
-        <img class="activity-pic" src="images/act.png">
-        <span>Activity</span>
-    </a>
-    <a href="/volunteer-box" class="volunteer">
-        <img class="volunteer-pic" src="images/volun.png">
-        <span>Volunteer</span>
-    </a>
-    <a href="/about-me" class="about-me">
-        <img class="about-me-pic" src="images/me.png">
-        <span>About Me</span>
-    </a>
+  <a
+    [routerLink]="['/academic-box']"
+    [queryParams]="{ activityType: 1 }"
+    class="academic"
+  >
+    <img class="academic-pic" src="images/aca.png">
+    <span>Academic</span>
+  </a>
+
+  <a
+    [routerLink]="['/activity-box']"
+    [queryParams]="{ activityType: 2 }"
+    class="activity"
+  >
+    <img class="activity-pic" src="images/act.png">
+    <span>Activity</span>
+  </a>
+
+  <a
+    [routerLink]="['/volunteer-box']"
+    [queryParams]="{ activityType: 3 }"
+    class="volunteer"
+  >
+    <img class="volunteer-pic" src="images/volun.png">
+    <span>Volunteer</span>
+  </a>
+
+  <a routerLink="/about-me" class="about-me">
+    <img class="about-me-pic" src="images/me.png">
+    <span>About Me</span>
+  </a>
 </div>
+
 
 
 <style>

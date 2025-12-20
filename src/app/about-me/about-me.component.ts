@@ -93,7 +93,9 @@ export class AboutMeComponent implements OnInit {
       this.showSuccess = '';      // ล้างข้อความ success
       setTimeout(() => this.showError = '', 3000);          // ซ่อนข้อความ error หลัง 3 วิ
     }
+    
   });
+  
 }
 
 

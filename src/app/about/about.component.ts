@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { Comment } from '@angular/compiler';
 import { Component } from '@angular/core';
 
 @Component({
