@@ -1,15 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../service-api.service';
 
-interface ActivityBox {
+interface AcademicBox {
+  AcademicId?: number;
   Name: string;
   Place: string;
   Date: Date;
   Comment: string;
   Detail: string;
   Image?: string;
+  ActivityType?: number;
 }
 
 @Component({
@@ -20,49 +22,34 @@ interface ActivityBox {
   styleUrls: ['./activity-box.component.css'],
 })
 export class ActivityBoxComponent implements OnInit {
+  // ✅ หน้านี้ fix ให้เป็น 2 ตลอด
+  activityType = 2;
 
-  // ✅ รับค่าจาก URL: /activity-box?activityType=2
-  activityType = 0;
+  // data
+  activities: AcademicBox[] = [];
+  expandedCards: boolean[] = [];
 
-  // UI state
+  // edit mode
+  editAcademicId: number | null = null;
+
   isPopupOpen = false;
   isClosing = false;
   showError = false;
 
-  // Form state
+  // form
   name = '';
   place = '';
-  date: Date = new Date();
+  date = ''; // ✅ ใช้ string สำหรับ <input type="date">
   comment = '';
   detail = '';
   previewImage: string | null = null;
 
-  // Data
-  activities: ActivityBox[] = [];
-  expandedCards: boolean[] = [];
-  editIndex: number | null = null;
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    this.readActivityType();
-    this.loadLocal();
-    this.loadUploadedImage();
+    this.loadActivities();
   }
 
-  // ----------------------------
-  // Routing / Params
-  // ----------------------------
-  private readActivityType(): void {
-    this.route.queryParamMap.subscribe(params => {
-      this.activityType = Number(params.get('activityType') ?? 0);
-      console.log('activityType =', this.activityType);
-    });
-  }
-
-  // ----------------------------
-  // Popup
-  // ----------------------------
   openPopup(): void {
     this.isPopupOpen = true;
     this.isClosing = false;
@@ -76,115 +63,140 @@ export class ActivityBoxComponent implements OnInit {
     }, 400);
   }
 
-  // ----------------------------
-  // Image Upload
-  // ----------------------------
-  onImageSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+  // -----------------------------
+  // GET (โหลดจาก backend แล้วกรอง activityType = 2)
+  // -----------------------------
+  loadActivities(): void {
+    this.api.getAcademics(this.activityType).subscribe({
+      next: (res: any[]) => {
+        // ✅ map + filter ให้เหลือ activityType = 2
+        const mapped = res.map((x) => ({
+          AcademicId: x.academicId,
+          Name: x.name,
+          Place: x.place,
+          Date: new Date(x.date),
+          Comment: x.comment,
+          Detail: x.detail,
+          Image: x.image,
+          ActivityType: x.activityType,
+        }));
+
+        this.activities = mapped.filter((x) => (x.ActivityType ?? 0) === 2);
+        this.expandedCards = Array(this.activities.length).fill(false);
+      },
+      error: (err: any) => console.error('loadActivities error', err),
+    });
+  }
+
+  // -----------------------------
+  // Image
+  // -----------------------------
+  onImageSelected(event: any): void {
+    const file = event?.target?.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = () => {
       this.previewImage = reader.result as string;
-      localStorage.setItem('uploadedImage', this.previewImage);
     };
     reader.readAsDataURL(file);
   }
 
-  private loadUploadedImage(): void {
-    const storedImage = localStorage.getItem('uploadedImage');
-    if (storedImage) this.previewImage = storedImage;
-  }
-
-  // ----------------------------
-  // CRUD (LocalStorage)
-  // ----------------------------
+  // -----------------------------
+  // POST / PUT
+  // -----------------------------
   saveActivity(): void {
-    if (!this.isValidForm()) {
-      this.flashError();
-      return;
-    }
+    // ✅ กัน date ว่าง / format ไม่ถูก
+    const dateToSend =
+      this.date && this.date.length >= 10
+        ? this.date
+        : new Date().toISOString().split('T')[0];
 
-    const newItem: ActivityBox = {
-      Name: this.name.trim(),
-      Place: this.place.trim(),
-      Date: this.date,
-      Comment: this.comment,
-      Detail: this.detail,
-      Image: this.previewImage || '',
+    const payload = {
+      Id : this.editAcademicId ?? 0,
+      academicId: this.editAcademicId ?? 0, // ✅ ต้องมีตอน PUT
+      name: this.name,
+      place: this.place,
+      date: dateToSend, // ✅ yyyy-MM-dd
+      comment: this.comment,
+      detail: this.detail,
+      image: this.previewImage || '',
+      activityType: 2, // ✅ หน้านี้ fix เป็น 2
     };
 
-    if (this.editIndex !== null) {
-      this.activities[this.editIndex] = newItem;
-      this.editIndex = null;
+    if (this.editAcademicId) {
+      // ✅ UPDATE (PUT)
+      this.api.updateAcademic(payload).subscribe({
+        next: () => {
+          this.editAcademicId = null;
+          this.openPopup();
+          this.resetForm();
+          this.loadActivities();
+          this.closePopup();
+        },
+        error: (err: any) => console.error('PUT error', err),
+      });
     } else {
-      this.activities.push(newItem);
-      this.expandedCards.push(false);
+      // ✅ ADD (POST)
+      this.api.addAcademic(payload).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadActivities();
+          this.closePopup();
+          
+        },
+        error: (err: any) => console.error('POST error', err),
+      });
     }
-
-    this.persistLocal();
-    this.resetForm();
-    this.closePopup();
   }
 
+  // -----------------------------
+  // DELETE
+  // -----------------------------
   deleteActivity(index: number): void {
-    this.activities.splice(index, 1);
-    this.expandedCards.splice(index, 1);
-    this.persistLocal();
+    const id = this.activities[index]?.AcademicId;
+    if (!id) return;
+
+    this.api.deleteAcademic(id).subscribe({
+      next: () => this.loadActivities(),
+      error: (err: any) => console.error('DELETE error', err),
+    });
   }
 
+  // -----------------------------
+  // EDIT (ใส่ค่ากลับเข้า form)
+  // -----------------------------
   editActivity(index: number): void {
-    const selected = this.activities[index];
-
-    this.name = selected.Name;
-    this.place = selected.Place;
-    this.date = new Date(selected.Date);
-    this.comment = selected.Comment;
-    this.detail = selected.Detail;
-    this.previewImage = selected.Image || null;
-
-    this.editIndex = index;
     this.openPopup();
+    const selected = this.activities[index];
+    if (!selected) return;
+
+    this.editAcademicId = selected.AcademicId ?? null;
+
+    this.name = selected.Name ?? '';
+    this.place = selected.Place ?? '';
+    this.date = selected.Date
+      ? new Date(selected.Date).toISOString().split('T')[0]
+      : '';
+    this.comment = selected.Comment ?? '';
+    this.detail = selected.Detail ?? '';
+    this.previewImage = selected.Image ?? null;
+  }
+
+  // -----------------------------
+  // Reset form
+  // -----------------------------
+  resetForm(): void {
+    this.name = '';
+    this.place = '';
+    this.date = '';
+    this.comment = '';
+    this.detail = '';
+    this.previewImage = null;
   }
 
   clearForm(): void {
     this.resetForm();
     this.openPopup();
-  }
-
-  // ----------------------------
-  // Helpers
-  // ----------------------------
-  private isValidForm(): boolean {
-    return this.name.trim() !== '' && this.place.trim() !== '' && !!this.date;
-  }
-
-  private flashError(): void {
-    this.showError = true;
-    setTimeout(() => (this.showError = false), 3000);
-  }
-
-  private resetForm(): void {
-    this.name = '';
-    this.place = '';
-    this.date = new Date();
-    this.comment = '';
-    this.detail = '';
-    this.previewImage = null;
-    this.editIndex = null;
-  }
-
-  private loadLocal(): void {
-    const storedData = localStorage.getItem('activity');
-    if (!storedData) return;
-
-    this.activities = JSON.parse(storedData);
-    this.expandedCards = Array(this.activities.length).fill(false);
-  }
-
-  private persistLocal(): void {
-    localStorage.setItem('activity', JSON.stringify(this.activities));
-    console.log('activity', this.activities);
   }
 }

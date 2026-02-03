@@ -56,7 +56,7 @@ export class AboutMeComponent implements OnInit {
 
   previewUrl: string | ArrayBuffer | null = null;
   isEditing: boolean = false;
-  private apiUrl = 'http://localhost:5093/api/AboutMe';
+  private apiUrl = 'https://Smart-Resume-api.nextgensea.com/api/AboutMe';
 
   constructor(private router: Router, private api: ApiService) {}
 

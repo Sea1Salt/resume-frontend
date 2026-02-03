@@ -1,75 +1,86 @@
-// src/app/services/api.service.ts
+// 📁 src/app/service-api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environment/environment';
 
 export interface TransAcademic {
+  Id? : number;
   academicId?: number;
   userId?: number;
+  activityType: number;
   name: string;
   place: string;
-  date: string; // "yyyy-MM-dd" หรือ ISO string
-  comment?: string;
-  detail?: string;
-  image?: string;
+  date: string; // ✅ backend รับเป็น string yyyy-MM-dd ได้ชัวร์
+  comment: string;
+  detail: string;
+  image?: string | null;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiService {
-  private baseUrl = 'http://localhost:5093/api';
+  private baseUrl = environment.apiURL;
+  // private baseUrl = 'https://Smart-Resume-api.nextgensea.com/api';
 
   constructor(private http: HttpClient) {}
 
-  // ✅ ใช้ HttpHeaders เสมอ
-  private authHeaders(): HttpHeaders {
+  // ---------- AUTH ----------
+  private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || '';
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
   }
 
-  // ---------------- Auth ----------------
+  // ---------- LOGIN / REGISTER ----------
   login(data: { Mail: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Login/Sign-In`, data);
+    return this.http.post(`${this.baseUrl}Login/Sign-In`, data);
   }
 
   register(data: { Mail: string; Password: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Regis/Sign-Up`, data);
+    return this.http.post(`${this.baseUrl}Regis/Sign-Up`, data);
   }
 
-  // ---------------- AboutMe ----------------
+  // ---------- ABOUT ME ----------
   saveAboutMe(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/AboutMe/Add`, data, {
-      headers: this.authHeaders()
+    return this.http.post(`${this.baseUrl}AboutMe/Add`, data, {
+      headers: this.getAuthHeaders()
     });
   }
 
   getAboutMe(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/AboutMe/Get`, {
-      headers: this.authHeaders()
+    return this.http.get(`${this.baseUrl}AboutMe/Get`, {
+      headers: this.getAuthHeaders()
     });
   }
 
-  // ---------------- Academics ----------------
-  getAcademics(): Observable<TransAcademic[]> {
-    return this.http.get<TransAcademic[]>(`${this.baseUrl}/Academics`, {
-      headers: this.authHeaders()
+  // ---------- ACADEMICS ----------
+  getAcademics(activityType?: number) {
+  const url =
+    activityType ? `${this.baseUrl}academics/AcademicsAll?activityType=${activityType}` : `${this.baseUrl}/academics/AcademicsItem`;
+
+  return this.http.get<any[]>(url, { headers: this.getAuthHeaders() });
+}
+
+
+  addAcademic(data: TransAcademic): Observable<any> {
+    return this.http.post(`${this.baseUrl}Academics/AcademicsAdd`, data, {
+      headers: this.getAuthHeaders()
     });
   }
 
-  addAcademic(data: TransAcademic): Observable<TransAcademic> {
-    return this.http.post<TransAcademic>(`${this.baseUrl}/Academics`, data, {
-      headers: this.authHeaders()
+  updateAcademic(data: TransAcademic): Observable<any> {
+    return this.http.post(`${this.baseUrl}Academics/AcademicsUpdate`, data, {
+      headers: this.getAuthHeaders()
     });
   }
 
-  updateAcademic(id: number, data: TransAcademic): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/Academics/${id}`, data, {
-      headers: this.authHeaders()
-    });
-  }
-
-  deleteAcademic(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/Academics/${id}`, {
-      headers: this.authHeaders()
+  deleteAcademic(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}Academics/${id}`, {
+      headers: this.getAuthHeaders()
     });
   }
 }

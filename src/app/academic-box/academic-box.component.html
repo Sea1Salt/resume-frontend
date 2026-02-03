@@ -1,6 +1,6 @@
 <div class="all-screen">
     <div class="card" *ngFor="let item of academics; let i = index">
-        <button class="delete-btn" (click)="deleteAcademic(i)">×</button>
+        <button class="delete-btn" (click)="deleteAcademic(item)">×</button>
         <img *ngIf="item.Image" [src]="item.Image" class="card-img">
         <h3>{{ item.Name }}</h3>
         <p><strong>Place :</strong> {{ item.Place }}</p>
@@ -13,7 +13,7 @@
         <button class="toggle-btn" (click)="expandedCards[i] = !expandedCards[i]">
             {{ expandedCards[i] ? 'See Less' : 'See More' }}
         </button>
-        <button class="edit-btn" (click)="editAcademic(i)"> + Edit </button>
+        <button class="edit-btn" (click)="editAcademic(item)"> + Edit </button>
     </div>
     <button class="adding-box" (click)="clearForm()">+</button>
 </div>
@@ -48,10 +48,12 @@
             <textarea [(ngModel)]="detail" class="detail-box" placeholder="Detail"></textarea>
         </div>
 
-        <button (click)="saveAcademic()" class="save-btn">{{ editIndex !== null ? 'Update' : 'Add' }}</button>
+        <button (click)="saveAcademic()" class="save-btn">
+  {{ editAcademicId ? 'Update' : 'Add' }}
+</button>
+
     </div>
 </div>
-
 
 
 <style>
